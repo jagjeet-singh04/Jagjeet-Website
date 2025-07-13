@@ -25,7 +25,7 @@ const AnonymousMessageSection = () => {
             </p>
             
             <motion.a 
-              href="https://ngl.link/_JAGJEET_SINGH_" 
+              href="https://ngl.link/_jagjeet_singh_" 
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-8 py-4 bg-black text-white rounded-full font-bold text-lg hover:bg-gray-800 transition-colors"
