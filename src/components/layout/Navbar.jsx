@@ -2,43 +2,25 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSun, FiMoon, FiGithub, FiMenu, FiX } from 'react-icons/fi';
 import { useTheme } from '../../contexts/ThemeContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ chillMode, onChillToggle, onHomeClick }) => {
   const { darkMode, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleHomeClick = (e) => {
     e.preventDefault();
     onHomeClick();
-    setMobileMenuOpen(false); // Close mobile menu when clicking home
-    
-    if (!chillMode) {
-      const element = document.getElementById('home');
-      if (element) {
-        const yOffset = -80;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }
-  };
-
-  const scrollToSection = (id) => {
-    if (chillMode) return;
-    setMobileMenuOpen(false); // Close mobile menu when selecting a section
-    
-    const element = document.getElementById(id);
-    if (element) {
-      const yOffset = -80;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    setMobileMenuOpen(false);
+    navigate('/');
   };
 
   const navItems = [
-    { id: 'identity', label: 'Identity' },
-    { id: 'ventures', label: 'Ventures' },
-    { id: 'social', label: 'Connect' },
-    { id: 'message', label: 'Message' },
+    { id: 'identity', label: 'Identity', path: '/identity' },
+    { id: 'ventures', label: 'Ventures', path: '/ventures' },
+    { id: 'social', label: 'Connect', path: '/connect' },
+    { id: 'message', label: 'Message', path: '/message' },
   ];
 
   return (
@@ -68,13 +50,14 @@ const Navbar = ({ chillMode, onChillToggle, onHomeClick }) => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                to={item.path}
                 className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
             <button
               onClick={onChillToggle}
@@ -120,13 +103,14 @@ const Navbar = ({ chillMode, onChillToggle, onHomeClick }) => {
             >
               <div className="pt-2 pb-4 space-y-2">
                 {navItems.map((item) => (
-                  <button
+                  <Link
                     key={item.id}
-                    onClick={() => scrollToSection(item.id)}
+                    to={item.path}
                     className="block w-full px-4 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
-                  </button>
+                  </Link>
                 ))}
                 <button
                   onClick={onChillToggle}
