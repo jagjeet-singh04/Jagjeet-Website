@@ -9,7 +9,7 @@ const ConnectScreen = () => {
     { icon: <FiLinkedin />, name: 'LinkedIn', url: 'https://www.linkedin.com/in/jagjeet-singh-a71aa2251/' },
     { icon: <FiTwitter />, name: 'Twitter', url: 'https://twitter.com' },
     { icon: <FiInstagram />, name: 'Instagram', url: 'https://www.instagram.com/_jagjeet_singh_/' },
-    { icon: <FiMail />, name: 'Email', url: 'mailto:your-email@example.com' }
+    { icon: <FiMail />, name: 'Email', url: 'mailto:jagjeetsingh0424@gmail.com' }
   ];
 
   return (

@@ -3,13 +3,12 @@ import { motion } from 'framer-motion';
 import SakuraPetalEffect from '../ui/SakuraPetalBackground';
 import KrishnaBot from '../KrishnaBot';
 
-const ChillSection = ({ onClose }) => {
+const ChillSection = () => {  // Removed onClose prop if not needed
   const [petalsActive, setPetalsActive] = useState(true);
   const [musicPlaying, setMusicPlaying] = useState(true);
   const [activeTab, setActiveTab] = useState('ambience');
   const audioRef = React.useRef(null);
 
-  // Initialize and play music
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio('/sounds/background-music-edited.mp3');
@@ -41,11 +40,12 @@ const ChillSection = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+    <div className="relative min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
       {/* Sakura Petal Effect */}
       {petalsActive && <SakuraPetalEffect />}
       
-      <div className="pt-16 min-h-screen flex flex-col">
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-16">
         {/* Chill Zone Header */}
         <div className="text-center px-4 py-8">
           <motion.h1 
@@ -103,7 +103,7 @@ const ChillSection = ({ onClose }) => {
         </div>
         
         {/* Tab Content */}
-        <div className="flex-grow px-4 pb-8">
+        <div className="px-4 pb-8">
           {activeTab === 'ambience' ? (
             <motion.div
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg p-6"
@@ -134,15 +134,6 @@ const ChillSection = ({ onClose }) => {
                 <div className="flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400 mb-4">
                   <div className={`w-3 h-3 rounded-full ${musicPlaying ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
                   <span>Ambient music {musicPlaying ? 'playing' : 'paused'}</span>
-                </div>
-                
-                <div className="mt-6 text-center">
-                  <button
-                    onClick={onClose}
-                    className="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-lg shadow"
-                  >
-                    Exit Chill Mode
-                  </button>
                 </div>
               </div>
             </motion.div>

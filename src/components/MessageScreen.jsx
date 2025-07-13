@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiArrowLeft, FiSend } from 'react-icons/fi';
+import { FiArrowLeft, FiSend, FiExternalLink } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const MessageScreen = () => {
-  const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const nglUsername = "_jagjeet_singh_"; // Replace with your actual NGL username
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the message to your backend
-    console.log('Message submitted:', message);
-    setSubmitted(true);
-    setMessage('');
-    setTimeout(() => setSubmitted(false), 3000);
+  const handleNglRedirect = () => {
+    window.open(`https://ngl.link/${nglUsername}`, '_blank');
   };
 
   return (
@@ -43,7 +38,7 @@ const MessageScreen = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Send Me a Message</h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            Share your thoughts anonymously
+            Share your thoughts anonymously through NGL
           </p>
         </div>
 
@@ -56,31 +51,27 @@ const MessageScreen = () => {
             Thank you for your message! I'll get back to you soon.
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Your Message
-              </label>
-              <textarea
-                id="message"
-                rows={6}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Write your message here..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-              />
+          <div className="space-y-6">
+            <div className="text-center">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Click the button below to send me an anonymous message via NGL
+              </p>
             </div>
             <motion.button
-              type="submit"
+              onClick={handleNglRedirect}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
             >
-              <FiSend />
-              Send Message
+              <FiExternalLink />
+              Send Anonymous Message on NGL
             </motion.button>
-          </form>
+            
+            <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-8">
+              <p>NGL is a platform for receiving anonymous messages.</p>
+              <p>You'll be redirected to ngl.link/{nglUsername}</p>
+            </div>
+          </div>
         )}
       </motion.div>
     </div>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -14,48 +14,71 @@ import VenturesScreen from './components/VentureScreen';
 import ConnectScreen from './components/ConnectScreen';
 import MessageScreen from './components/MessageScreen';
 
-function MainContent({ chillMode, setChillMode }) {
-  return chillMode ? (
-    <ChillSection onClose={() => setChillMode(false)} />
-  ) : (
-    <main className="flex-grow">
+function MainContent() {
+  return (
+    <>
       <HeroSection />
       <IdentitySection />
       <VenturesSection />
       <SocialHubSection />
       <AnonymousMessageSection />
-    </main>
+    </>
+  );
+}
+
+function Layout({ children }) {
+  const location = useLocation();
+  const hideFooterRoutes = ['/chill'];
+  const shouldShowFooter = !hideFooterRoutes.includes(location.pathname);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      <Navbar />
+      <main className="flex-grow">
+        {children}
+      </main>
+      {shouldShowFooter && <Footer />}
+    </div>
   );
 }
 
 function App() {
-  const [chillMode, setChillMode] = useState(false);
-
-  const handleHomeClick = () => {
-    setChillMode(false);
-  };
-
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-          <Navbar 
-            chillMode={chillMode}
-            onChillToggle={() => setChillMode(!chillMode)}
-            onHomeClick={handleHomeClick}
-          />
-          
-          <Routes>
-            <Route path="/" element={<MainContent chillMode={chillMode} setChillMode={setChillMode} />} />
-            <Route path="/identity" element={<IdentityScreen />} />
-            <Route path="/ventures" element={<VenturesScreen />} />
-            <Route path="/connect" element={<ConnectScreen />} />
-            <Route path="/message" element={<MessageScreen />} />
-          </Routes>
-          
-          {/* Only show footer on home page */}
-          {window.location.pathname === '/' && !chillMode && <Footer />}
-        </div>
+        <Routes>
+          <Route path="/" element={
+            <Layout>
+              <MainContent />
+            </Layout>
+          } />
+          <Route path="/identity" element={
+            <Layout>
+              <IdentityScreen />
+            </Layout>
+          } />
+          <Route path="/ventures" element={
+            <Layout>
+              <VenturesScreen />
+            </Layout>
+          } />
+          <Route path="/connect" element={
+            <Layout>
+              <ConnectScreen />
+            </Layout>
+          } />
+          <Route path="/message" element={
+            <Layout>
+              <MessageScreen />
+            </Layout>
+          } />
+          <Route path="/chill" element={
+            <div className="min-h-screen flex flex-col">
+              <Navbar />
+              <ChillSection />
+            </div>
+          } />
+        </Routes>
       </Router>
     </ThemeProvider>
   );
