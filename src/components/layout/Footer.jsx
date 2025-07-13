@@ -11,13 +11,33 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   // Interactive elements data
-  const quickLinks = [
-    { icon: <FiMusic />, label: 'Music Blog', url: '/music' },
-    { icon: <FiCamera />, label: 'Photography', url: '/photos' },
-    { icon: <FiBookOpen />, label: 'Read My Blog', url: '/blog' },
-    { icon: <FiZap />, label: 'Latest Project', url: '/projects' }
-  ];
-
+ const quickLinks = [
+  { 
+    icon: <FiMusic />, 
+    label: 'Music Blog', 
+    url: '/music',
+    description: 'Explore my music recommendations and playlists'
+  },
+  { 
+    icon: <FiBookOpen />, 
+    label: 'Tech Blog', 
+    url: '/blog',
+    description: 'Read my latest articles on web development and tech'
+  },
+  { 
+    icon: <FiZap />, 
+    label: 'Projects', 
+    url: '/projects',
+    description: 'Check out my open-source projects and experiments'
+  },
+ 
+  { 
+    icon: <FiHeart />, 
+    label: 'About Me', 
+    url: '/about',
+    description: 'Learn more about my journey and interests'
+  }
+];
   return (
     <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-300 py-12 px-6">
       <div className="max-w-7xl mx-auto">
@@ -52,28 +72,35 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Middle Column - Quick Actions */}
+        {/* Middle Column - Quick Actions */}
+<div>
+  <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+    <FiZap className="text-yellow-400" />
+    Quick Navigation
+  </h3>
+  <div className="grid grid-cols-1 gap-3">
+    {quickLinks.map((link, index) => (
+      <a 
+        key={index}
+        href={link.url}
+        className="group p-4 bg-gray-800 bg-opacity-30 rounded-lg hover:bg-opacity-50 transition-all"
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-purple-400 text-xl group-hover:scale-110 transition-transform">
+            {link.icon}
+          </span>
           <div>
-            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <FiZap className="text-yellow-400" />
-              Quick Actions
-            </h3>
-            <div className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <a 
-                  key={index}
-                  href={link.url}
-                  className="flex items-center gap-3 p-3 bg-gray-800 bg-opacity-30 rounded-lg hover:bg-opacity-50 transition-all group"
-                >
-                  <span className="text-purple-400 group-hover:scale-110 transition-transform">
-                    {link.icon}
-                  </span>
-                  <span className="group-hover:text-white">{link.label}</span>
-                  <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                </a>
-              ))}
+            <div className="font-medium group-hover:text-white">{link.label}</div>
+            <div className="text-sm text-gray-400 group-hover:text-gray-300">
+              {link.description}
             </div>
           </div>
+          <span className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
 
           {/* Right Column - Tech Stack with Interactive Elements */}
           <div>

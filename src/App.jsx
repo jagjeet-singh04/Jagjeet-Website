@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -13,6 +13,10 @@ import IdentityScreen from './components/IdentityScreen';
 import VenturesScreen from './components/VentureScreen';
 import ConnectScreen from './components/ConnectScreen';
 import MessageScreen from './components/MessageScreen';
+import MusicBlog from './components/sections/MusicBlog';
+import TechBlog from './components/sections/TechBlog';
+import Projects from './components/sections/Projects';
+import AboutMe from './components/sections/AboutMe';
 
 function MainContent() {
   return (
@@ -26,59 +30,31 @@ function MainContent() {
   );
 }
 
-function Layout({ children }) {
-  const location = useLocation();
-  const hideFooterRoutes = ['/chill'];
-  const shouldShowFooter = !hideFooterRoutes.includes(location.pathname);
-
-  return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <Navbar />
-      <main className="flex-grow">
-        {children}
-      </main>
-      {shouldShowFooter && <Footer />}
-    </div>
-  );
-}
-
 function App() {
   return (
     <ThemeProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={
-            <Layout>
-              <MainContent />
-            </Layout>
-          } />
-          <Route path="/identity" element={
-            <Layout>
-              <IdentityScreen />
-            </Layout>
-          } />
-          <Route path="/ventures" element={
-            <Layout>
-              <VenturesScreen />
-            </Layout>
-          } />
-          <Route path="/connect" element={
-            <Layout>
-              <ConnectScreen />
-            </Layout>
-          } />
-          <Route path="/message" element={
-            <Layout>
-              <MessageScreen />
-            </Layout>
-          } />
-          <Route path="/chill" element={
-            <div className="min-h-screen flex flex-col">
-              <Navbar />
-              <ChillSection />
-            </div>
-          } />
-        </Routes>
+        <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              {/* Home route */}
+              <Route path="/" element={<MainContent />} />
+              
+              {/* Individual section routes */}
+              <Route path="/music" element={<MusicBlog />} />
+              <Route path="/blog" element={<TechBlog />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/about" element={<AboutMe />} />
+              <Route path="/identity" element={<IdentityScreen />} />
+              <Route path="/ventures" element={<VenturesScreen />} />
+              <Route path="/connect" element={<ConnectScreen />} />
+              <Route path="/message" element={<MessageScreen />} />
+              <Route path="/chill" element={<ChillSection />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </Router>
     </ThemeProvider>
   );
