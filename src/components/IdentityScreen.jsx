@@ -66,7 +66,7 @@ const IdentityScreen = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">Role</h3>
-                <p className="text-gray-600 dark:text-gray-400">Frontend Developer</p>
+                <p className="text-gray-600 dark:text-gray-400">Full Stack Developer</p>
               </div>
               <div>
                 <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">Skills</h3>
@@ -76,7 +76,7 @@ const IdentityScreen = () => {
               </div>
               <div>
                 <h3 className="text-lg font-medium text-gray-800 dark:text-gray-200">Experience</h3>
-                <p className="text-gray-600 dark:text-gray-400">3+ years</p>
+                <p className="text-gray-600 dark:text-gray-400">0-1 years</p>
               </div>
             </div>
           </div>

@@ -126,12 +126,13 @@ const KrishnaBot = ({ musicPlaying, toggleMusic, petalsActive, togglePetals }) =
 
     try {
       // Optimized prompt for VERY short responses (1 sentence max)
-      const prompt = `
-You are Krishna. Respond in Hinglish with:
-1. Strictly to the point ans what is asked by the user 
-2. Focus on spiritual guidance
-3. Use simple words
-4. End with emoji
+     const prompt = `
+You are Krishna GPT. Jab user advice maange, toh:
+1. Sirf ek sentence mein seedha jawaab do
+2. Hinglish mein bolo, simple aur clear words use karo
+3. Spiritual gyaan ya Geeta ka saar bhi ho usme
+4. Har reply ek emoji ke saath end ho
+
 
 User: ${input.trim()}
 `;
@@ -378,43 +379,83 @@ User: ${input.trim()}
       </div>
 
       {/* Input Section with fixed height */}
-      <div className="mt-auto border-t border-gray-200 dark:border-gray-700 pt-2">
-        <div className="flex">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message to Krishna..."
-            className="flex-grow border border-gray-300 dark:border-gray-600 rounded-l-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
-            rows={2}
-            disabled={isLoading || isListening}
-            style={{ minHeight: '80px' }} // Fixed minimum height
-          />
-          <button
-            onClick={handleSend}
-            disabled={isLoading || !input.trim() || isListening}
-            className={`bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-r-lg flex items-center text-sm ${
-              isLoading || !input.trim() || isListening
-                ? 'opacity-50 cursor-not-allowed'
-                : ''
-            }`}
-          >
-            <span>Send</span>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-4 w-4 ml-1" 
-              viewBox="0 0 24 24" 
-              fill="currentColor"
-            >
-              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-            </svg>
-          </button>
-        </div>
+   {/* Input Section with fixed height */}
+<div className="mt-auto border-t border-gray-200 dark:border-gray-700 pt-2">
+  <div className="flex items-end gap-1">
+    <textarea
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      onKeyDown={handleKeyDown}
+      placeholder="Type your message to Krishna..."
+      className="flex-grow border border-gray-300 dark:border-gray-600 rounded-l-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
+      rows={2}
+      disabled={isLoading || isListening}
+      style={{ minHeight: '80px' }}
+    />
+    
+    {/* Voice Input Button - Modern icon */}
+    <button
+      onClick={toggleVoiceInput}
+      disabled={isLoading}
+      className={`p-2 h-10 flex items-center justify-center rounded-md ${
+        isListening
+          ? 'bg-red-500 text-white animate-pulse'
+          : 'bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-800 dark:hover:bg-indigo-700 text-indigo-600 dark:text-indigo-200'
+      }`}
+      aria-label={isListening ? 'Stop listening' : 'Start voice input'}
+    >
+      {isListening ? (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-5 w-5" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+        </svg>
+      ) : (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-5 w-5" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+        </svg>
+      )}
+    </button>
+    
+    {/* Send Button */}
+    <button
+      onClick={handleSend}
+      disabled={isLoading || !input.trim() || isListening}
+      className={`bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-r-lg flex items-center justify-center h-10 ${
+        isLoading || !input.trim() || isListening
+          ? 'opacity-50 cursor-not-allowed'
+          : ''
+      }`}
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="h-5 w-5" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </div>
 
-        <p className="mt-1 text-xxs text-gray-500 dark:text-gray-400">
-          Chat with Krishna Bot for divine wisdom
-        </p>
-      </div>
+  <p className="mt-1 text-xxs text-gray-500 dark:text-gray-400">
+    Chat with Krishna Bot for divine wisdom
+  </p>
+</div>
     </div>
   );
 };

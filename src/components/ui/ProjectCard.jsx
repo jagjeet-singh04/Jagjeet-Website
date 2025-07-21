@@ -1,50 +1,75 @@
-// src/components/ui/ProjectCard.jsx
+// src/ui/ProjectCard.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
+import { FiExternalLink, FiGithub } from 'react-icons/fi';
 
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({ project }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="flex flex-col rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-gray-800 hover:shadow-xl transition-shadow"
+      whileHover={{ y: -10 }}
+      className="h-full"
     >
-      <div className="flex-shrink-0 h-48 bg-gray-200 dark:bg-gray-700 border-2 border-dashed" />
-      <div className="flex-1 p-6 flex flex-col justify-between">
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              {project.name}
-            </h3>
-            {project.status === 'upcoming' && (
-              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200">
+      <div className="h-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group">
+        {/* Accent bar */}
+        <div className={`h-2 ${project.accent}`}></div>
+        
+        <div className="p-6 flex flex-col flex-1">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.name}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-300 mt-1">{project.tagline}</p>
+            </div>
+            
+            {project.status === "live" && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                Live
+              </span>
+            )}
+            {project.status === "upcoming" && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                 Coming Soon
               </span>
             )}
           </div>
-          <p className="mt-2 text-base text-gray-600 dark:text-gray-300">
-            {project.tagline}
-          </p>
-          <p className="mt-3 text-base text-gray-700 dark:text-gray-200">
+          
+          <p className="text-gray-600 dark:text-gray-300 mb-6 flex-1">
             {project.description}
           </p>
-        </div>
-        <div className="mt-4">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.tech.map((tech) => (
-              <span key={tech} className="px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-200">
-                {tech}
-              </span>
-            ))}
+          
+          <div className="mb-6">
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((tech, idx) => (
+                <span 
+                  key={idx}
+                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
-          <a
-            href={project.link}
-            className="w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-          >
-            {project.cta}
-          </a>
+          
+          <div className="flex gap-3">
+            <motion.a
+              href={project.link}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className={`flex-1 inline-flex items-center justify-center px-4 py-2 rounded-lg text-white font-medium ${project.accent} shadow-md transition-all`}
+            >
+              <span className="mr-2">{project.cta}</span>
+              <FiExternalLink className="text-sm" />
+            </motion.a>
+            
+            <motion.a
+              href={project.github || "#"}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+              aria-label="GitHub repository"
+            >
+              <FiGithub className="text-lg" />
+            </motion.a>
+          </div>
         </div>
       </div>
     </motion.div>
